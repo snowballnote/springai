@@ -1,8 +1,0 @@
-package com.example.openai0113.controller;
-
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class ChatMessageController {
-
-}
