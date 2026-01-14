@@ -1,0 +1,35 @@
+package com.example.openai0113.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+
+import com.example.openai0113.dto.ChatMessage;
+
+public interface ChatMessageMapper {
+	@Insert("""
+			INSERT INTO chat_message(
+				user_id, content, is_user, created_at
+			) VALUES (
+				#{userId}, 
+				#{content}, 
+				#{isUser}, 
+				NOW()
+			)
+		""")
+	int insert(ChatMessage cm);
+	
+	@Select("""
+			SELECT
+				no, 
+				user_id AS userId, 
+				content,
+				is_user AS isUser, 
+				created_at AS createdAt
+			FROM chat_message
+			WHERE user_id = #{uid}
+			ORDER BY no ASC
+		""")
+	List<ChatMessage> selectByUserId(String uid);
+}

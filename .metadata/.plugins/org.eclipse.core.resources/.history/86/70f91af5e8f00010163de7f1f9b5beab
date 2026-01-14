@@ -1,0 +1,53 @@
+package com.example.openai0113.service;
+
+import java.util.List;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.openai0113.dto.ChatMessage;
+import com.example.openai0113.dto.ChatMessageRequest;
+import com.example.openai0113.dto.ChatMessageResponse;
+import com.example.openai0113.mapper.ChatMessageMapper;
+
+@Service
+@Transactional
+public class ChatMessageService {
+	private final ChatClient chatClient;
+	private final ChatMessageMapper chatMessageMapper;
+	// 생성자 주입
+	public ChatMessageService(ChatClient chatClient, ChatMessageMapper chatMessageMapper) {
+		this.chatClient = chatClient;
+		this.chatMessageMapper = chatMessageMapper;
+	}
+	
+	private final String REF_SYSTEM_MESSAGE = """
+			당신은 "Awesome Tech"라는 회사의 E-커머스 고객 지원 챗봇입니다.
+         항상 친절하고 명확하게 답변해야 합니다. 사용자가 상품에 대해서 물으면 아래 정보를 기반으로 답해주세요.
+         
+         - 상품명: 갤럭시 AI 북
+         - 가격: 1,500,000원
+         - 특징: 최신 AI 기능이 탑재된 고성능 노트북, 가볍고 배터리가 오래 갑니다
+         - 재고: 현재 구매 가능
+         
+         - 상품명: AI 스마트 워치
+         - 가격: 300,000
+         - 특징: 건강 모니터닐과 스마트폰 연동 기능 제공, 방수 기능 포함.
+         - 재고: 품절(5일 후 재입고 예정)
+         
+         내부에 없는 정보 일 경우, 정중하게 안내하면서도 일반적인 정보나 유사한 내용을 최대한 제공해 주세요
+	""";
+	
+	public List<ChatMessageResponse> getChatMessageList(ChatMessageRequest chatMessageRequest){
+		// SystemMessage : REF_SYSTEM_MESSAGE
+		// UserMessage : chatMessageRequest.getUserMessage()
+		// AssistantMessage : chatMessageRequest.getUserMessage(String uid)
+		
+		// DB에서 가져온 현재 사용자의 chat_message를 가져온다
+		String userId = chatMessageRequest.getUserId();
+		List<ChatMessage> previousMessage = chatMessageMapper.selectByUserId(REF_SYSTEM_MESSAGE)
+		
+		return null;
+	}
+}

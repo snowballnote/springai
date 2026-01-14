@@ -1,0 +1,6 @@
+package com.example.openai0113.mapper;
+
+public interface ChatMessageMapper {
+	int insert(ChatMessage cm);
+	List<ChatMessage> selectByUserId(String uid);
+}

@@ -1,0 +1,38 @@
+package com.example.openai0113.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.SystemMessage;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.stereotype.Service;
+
+@Service
+public class Test2Service {
+	private final ChatClient chatClient;
+	
+	public Test2Service(ChatClient.Builder builder) {
+		this.chatClient = builder.build();
+	}
+	
+	// AI모델에서 문자열을 반환
+	
+	// AI모델이 반환하는 타입 ChatResponse
+	public ChatResponse getChatResponse(String userMessage) {
+		List<Message> msg = new ArrayList<>();
+		msg.add(new SystemMessage("넌 친절한 AI모델이야"));
+		msg.add(new UserMessage(userMessage));
+		
+		Prompt prompt = new Prompt(messages);
+		
+		ChatOptions chatOptions = ChatOptions.builder().maxTokens(500).build();
+		return chatClient.prompt(prompt)
+						.options(chatOptions)
+						.call()
+						.chatResponse();
+	}
+}

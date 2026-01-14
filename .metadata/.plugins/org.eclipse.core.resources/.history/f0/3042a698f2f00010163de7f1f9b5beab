@@ -1,0 +1,23 @@
+package com.example.openai0113.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.openai0113.dto.ChatMessageRequest;
+import com.example.openai0113.dto.ChatMessageResponse;
+import com.example.openai0113.service.ChatMessageService;
+
+@RestController
+public class ChatMessageController {
+	private final ChatMessageService chatMessageService;	
+	public ChatMessageController(ChatMessageService chatMessageService) {
+		this.chatMessageService = chatMessageService;
+	}
+
+
+	public List<ChatMessageResponse> chat(@RequestBody ChatMessageRequest chatMessageRequest){
+		return null;
+	}
+}

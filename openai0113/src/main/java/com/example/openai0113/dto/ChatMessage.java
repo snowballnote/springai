@@ -1,0 +1,12 @@
+package com.example.openai0113.dto;
+
+import lombok.Data;
+
+@Data
+public class ChatMessage {
+	private int no;
+	private String userId;
+	private String content;
+	private String isUser;
+	private String createdAt;
+}

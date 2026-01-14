@@ -1,0 +1,18 @@
+package com.example.openai0113.service;
+
+import org.springframework.ai.image.ImageModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.openai0113.dto.ImageResponse;
+
+@Service
+public class ImageModelService {
+	@Autowired private ImageModel imageModel; // 이미지를 생성하는 ai모델
+	
+	public ImageResponse getImageResponse(String userMessage) {
+		ImageResponse ir;
+		
+		return ir;
+	}
+}

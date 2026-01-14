@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>쇼핑몰 Chat Bot</h1>
+	
+	<!-- 챗팅 메세지 누적 -->
+	<div id="chatBox"></div>
+	
+	<input type="text" id="userMessage">
+	<button type="button" id="sendBtn">전송</button>
+	
+	<script>
+		$("#sendBtn").click(function() {
+			if ($("#userMessage").val().trim() === "") {
+				alert("메세지를 입력하세요");
+				return;
+			}
+			
+			const chatMessageRequest = {
+					userId: "user10", // ex) 로그인 사용자의 id
+					userMessage: $("#userMessage").val().trim()
+			}
+			
+			$.ajax({
+				url: "http://localhost:8080/chatMessage", 
+				type: "POST", // method type
+				contentType: "application/json", 
+				data: JSON.stringify(chatMessageRequest), // 객체를 json문자열로 직열화
+				success: function(data) { // data: [{who: "MY", message: "..."}, {who: "AI", message: "..."}] 
+					data.forEach(function(item, index) {
+						// console.log(item.who, item.message);
+						$("#chatBox").append(
+							"<span>" + item.who + "</span><br><span>" + item.message + "</span>"
+						);
+					})
+				}, 
+				error: function(err) {
+					alert("실패: " + err);
+				}
+			});
+		});
+	</script>
+	
+</body>
+</html>

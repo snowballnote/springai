@@ -1,0 +1,5 @@
+package com.example.openai0113.dto;
+
+public class SentimentResponse {
+
+}

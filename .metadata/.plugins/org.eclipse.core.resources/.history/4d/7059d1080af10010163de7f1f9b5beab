@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ececec;
+    }
+
+    #chatBox {
+        width: 400px;
+        height: 400px;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: #b2c7da; /* 카카오톡 배경 */
+        overflow-y: auto;
+        border-radius: 10px;
+    }
+
+    /* 공통 말풍선 */
+    .chat {
+        max-width: 70%;
+        padding: 10px 14px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        clear: both;
+    }
+
+    /* 사용자 */
+    .YOU {
+        background-color: #fff48f;
+        float: right;
+        border-bottom-right-radius: 4px;
+    }
+
+    /* AI */
+    .AI {
+        background-color: #ffffff;
+        float: left;
+        border-bottom-left-radius: 4px;
+    }
+
+    /* 입력 영역 */
+    #userMessage {
+        width: 300px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        margin-left: calc(50% - 200px);
+    }
+
+    #sendBtn {
+        padding: 10px 16px;
+        border-radius: 20px;
+        border: none;
+        background-color: #ffeb3b;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+<body>
+	<h1>쇼핑몰 Chat Bot</h1>
+	
+	<!-- 챗팅 메세지 누적 -->
+	<div id="chatBox"></div>
+	
+	<input type="text" id="userMessage">
+	<button type="button" id="sendBtn">전송</button>
+	
+	<script>
+		$("#sendBtn").click(function() {
+			if ($("#userMessage").val().trim() === "") {
+				alert("메세지를 입력하세요");
+				return;
+			}
+			
+			const chatMessageRequest = {
+					userId: "user10", // ex) 로그인 사용자의 id
+					userMessage: $("#userMessage").val().trim()
+			}
+			
+			$.ajax({
+				url: "http://localhost:8080/chatMessage", 
+				type: "POST", // method type
+				contentType: "application/json", 
+				data: JSON.stringify(chatMessageRequest), // 객체를 json문자열로 직열화
+				success: function(data) { // data: [{who: "MY", message: "..."}, {who: "AI", message: "..."}] 
+					data.forEach(function(item, index) {
+						// console.log(item.who, item.message);
+						$("#chatBox").append(
+								 `<div class="chat ${item.who}">${item.message}</div>`
+						);
+					})
+				}, 
+				error: function(err) {
+					alert("실패: " + err);
+				}
+			});
+			// 챗입력 상자 초기화
+			$("#userMessage").val("");
+		});
+		
+		// 엔터키 누르면 동일한 코드
+	</script>
+	
+</body>
+</html>

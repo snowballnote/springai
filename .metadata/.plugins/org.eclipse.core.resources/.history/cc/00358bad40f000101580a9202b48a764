@@ -1,0 +1,13 @@
+package com.example.openai0113.dto;
+
+import lombok.Data;
+
+@Data
+public class SentimentResponse2 {
+	private String sentiment;
+	private String reason;
+	
+	enum{
+		POSITIVE, NEUTRAL, NEGATIVE
+	}
+}

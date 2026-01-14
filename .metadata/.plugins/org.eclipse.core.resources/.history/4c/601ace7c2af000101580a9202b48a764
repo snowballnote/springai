@@ -1,0 +1,2 @@
+spring.application.name=openai0113
+spring.ai.openai.api-key=${OPENAI_API_KEY}

@@ -7,14 +7,10 @@ export default defineConfig({
   plugins: [react( ), tailwindcss()],
   server: {
     proxy: {
-      '/test': {
+      '/chatMessage': {
         target: 'http://localhost:8080',
         changeOrigin: true,
       }, 
-      "/test2": {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },  
     },  
   }, 
 });
